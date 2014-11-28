@@ -35,7 +35,7 @@ void lowLevelProtocol()
     Serial.write((unsigned char) (robot.rightClicks & 0xFF));
   }
   //Infra-Red Sensors 'I'
-  else if (inByte==0x73) //I IR read
+  else if (inByte==0x49) //I IR read
   {
     robot.readIR();
     for (int i=0;i<3;i++)
@@ -86,13 +86,16 @@ void lowLevelProtocol()
      
    int vel1 = 0;
    int vel2 = 0;
-    if(dir1 == 0)
+   
+   
+   
+    if((int)dir1 == 0)
       vel1 = (int)veloc1;
     else
       vel1 = -(int)veloc1;
       
       
-    if(dir2 == 0)
+    if((int)dir2 == 0)
       vel2 = (int)veloc2;
     else
       vel2 = -(int)veloc2;

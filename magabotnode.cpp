@@ -114,7 +114,7 @@ void drive(double linear_speed, double angular_speed)
 
 	
 	lvel = left_write;
-	rvel = -right_write;
+	rvel = right_write;
 	
 }
 void cmdVelReceived(const geometry_msgs::Twist::ConstPtr& cmd_vel)
@@ -142,7 +142,7 @@ void getSonars()
 void getIR()
 {
     char ir_command[1];
-    ir_command[0] = char(0x73);
+    ir_command[0] = char(0x49);
     serial_port.write(ir_command,1);
     char ir_response[6];
     serial_port.read(ir_response, 6, 1000);
@@ -309,7 +309,7 @@ void timerCallback(const ros::TimerEvent&)
 {
 	getRPY();
 	
-	getSonars();
+	//getSonars();
 	
 
 	//GET ODOMETRY	
@@ -332,7 +332,7 @@ void timerCallback(const ros::TimerEvent&)
 	
 	char vel_command[5];
 	vel_command[0] = (char)(0x86);
-	vel_command[1] = (char)((abs(lvel)));
+	vel_command[1] = (char)((int)(abs(lvel)));
 	if(lvel > 0)
 		vel_command[2] = (char)(0);
 	else
@@ -346,7 +346,7 @@ void timerCallback(const ros::TimerEvent&)
 		vel_command[4] = (char)(1);	
 		
 	serial_port.write(vel_command,5);
-//ROS_FATAL("%d %d", (int)(abs(lvel)), (int)(abs(rvel)));
+ROS_FATAL("%d %d", (int)(abs(lvel)), (int)(abs(rvel)));
 	//char vel_response[1];
 	//serial_port.read(vel_response, 1, 1000);
 }
